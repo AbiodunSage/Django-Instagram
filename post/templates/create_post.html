@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+
+{%block body%}
+    <form method="POST" enctype="multipart/form-data" class="p-3 text white rounded-lg">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+        <button type="submit" class="bg-red-400 p-2 rounded-md">Create Post</button>
+    </form>
+{%endblock%} 

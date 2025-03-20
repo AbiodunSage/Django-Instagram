@@ -1,0 +1,26 @@
+{% extends "account/base.html" %}
+{% load static %} <!-- Load static files -->
+
+{% block content %}
+<div class="form-container">
+    <!-- Instagram Logo (replace with an actual logo) -->
+    <img class="instagram-logo" src="{% static 'images/insta-logo.png' %}" alt="Instagram Logo">
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <!-- Render Django form fields with Instagram-style input -->
+        {{ form.as_p }}
+
+        <button type="submit">Sign Up</button>
+    </form>
+
+  
+
+    <div class="signup-link">
+        Already have an account? <a href="{{ login_url }}">Log In</a>
+    </div>
+</div>
+    
+
+{% endblock %}

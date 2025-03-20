@@ -1,0 +1,94 @@
+
+{% extends "base.html" %}
+
+
+
+{% load static %}
+{%load thumbnail%}
+
+{% block body %}
+<div class="max-w-4xl mx-auto p-4">
+    <!-- Profile Header -->
+    <div class="flex items-center space-x-6">
+        <!-- Profile Picture -->
+        
+        
+        
+            {% thumbnail user.profile.Image "373x373" crop="center" as im %}
+            <img src="{{im.url}}" class="rounded-full border-solid border-white border-2 -mt-3">
+            {% endthumbnail %}
+        
+        
+        <!-- Profile Info -->
+        <div>
+            <div class="flex items-center space-x-4">
+                <h2 class="text-xl font-semibold">{{ profile.user.username }}</h2>
+                {% if request.user == user %}
+                <a href="{% url 'profiles:update' user.username %}" class="bg-gray-200 text-black px-4 py-1 rounded-md text-sm">Edit Profile</a>
+                {% endif %}
+            </div>
+            <div class="flex space-x-6 text-sm mt-2">
+                <span><strong>{{ user.profile.posts.count }}</strong> posts</span>
+                <span><strong>{{ user.profile.followers.count }}</strong> followers</span>
+                <span><strong>{{ user.profile.following.count }}</strong> following</span>
+            </div> 
+         <p class="text-gray-700 text-sm mt-2">{{ profile.bio }}</p>
+        </div>
+    </div> 
+
+    <!-- Profile Posts -->
+    
+     <div class="mt-6 border-t pt-4">
+        <h3 class="text-lg font-semibold">Posts</h3>
+        <div class="grid grid-cols-3 gap-2 mt-4">
+            <h1> Post are not showing yet</h1>
+            {% for post in user.profile.posts.all %}
+            <div>
+                <img src="{{ post.image.url }}" alt="Post Image" class="w-full h-48 object-cover">
+            </div>
+            {% empty %}
+            <p class="col-span-3 text-gray-500 text-center">No posts yet.</p>
+            {% endfor %}
+        </div>
+        
+    </div>
+    <div class="flex items-center space-x-4">
+                <h2 class="text-3xl font-semibold">{{ profile.user.username }}</h2>
+                {% if request.user == profile.user %}
+                    <a href="{% url 'profiles:update' profile.user.username %}" class="bg-gray-200 text-black px-4 py-1 rounded-md text-sm">Edit Profile</a>
+                {% endif %}
+            </div>
+
+            <div class="mt-4">
+                <p><strong>{{ profile.user.post_set.count }}</strong> posts</p>
+                <p><strong>{{ profile.followers.count }}</strong> followers</p>
+                <p><strong>{{ profile.user.following.count }}</strong> following</p>
+            </div>
+
+            <div class="mt-4">
+                <p>{{ profile.bio }}</p>
+                {% if profile.website %}
+                    <p><a href="{{ profile.website }}" target="_blank" class="text-blue-500">{{ profile.website }}</a></p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <hr class="my-8">
+
+    <div class="grid grid-cols-3 gap-4">
+        {% for post in profile.user.post_set.all %}
+            <a href="{% url 'posts:detail' post.id %}">
+                <img src="{{ post.image.url }}" alt="{{ post.caption }}" class="w-full h-auto object-cover aspect-square">
+            </a>
+        {% empty %}
+            <p>No posts yet.</p>
+        {% endfor %}
+    </div>
+
+</div>
+
+</div>
+ {% endblock %} 
+ {# Replace "base.html" with your base template #}
+

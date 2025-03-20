@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="shadow-wrap flex justify-center items-center min-h-screen bg-gray-600">
+    <div class="form-container bg-gray-500 text-black p-6 rounded-lg shadow-lg w-full max-w-md">
+        <h1 class="text-xl font-semibold text-center mb-4">Update Profile</h1>
+        <form method="POST" enctype="multipart/form-data" class="space-y-4">
+            {% csrf_token %}
+            <div>
+                <label class="block mb-1 text-gray-300">Profile Image</label>
+                {% comment %} <input type="file" name="Image" id="imageUpload" class="form-control bg-gray-700 text-white p-2 rounded w-full" accept="image/*" onchange="previewImage(event)"> {% endcomment %}
+                
+                <!-- Image Preview -->
+                <div class="mt-4">
+                    <img id="imagePreview" src="{{ request.user.profile.Image.url }}" alt="Current Profile Image" 
+                        class="w-32 h-32 object-cover rounded-full mx-auto border border-gray-600">
+                </div>
+            </div>
+            <div>
+                <label class="block mb-1 text-gray-300">Username</label>
+                {{ form.username }}
+            </div>
+            <div>
+                <label class="block mb-1 text-gray-300">Bio</label>
+                {{ form.bio }}
+            </div>
+
+            <button type="submit" 
+                class="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded transition-all">
+                Submit
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}
