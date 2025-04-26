@@ -58,51 +58,6 @@ $('#file-input').on('change', function(event) {
     }
 })
 
-// $(document).on("click", ".js-submit", function (e) {
-//     e.preventDefault();
-//     console.log("Submitting post...");
-
-//     const text = $(".text-input").val().trim();
-//     const file = $("#file-input")[0].files[0];
-//     const $btn = $(this);
-
-//     if (!text && !file) {
-//         return false;
-//     }
-
-//     $btn.prop("disabled", true).text("Posting...");
-//     let formData = new FormData();
-//     formData.append("text", text);
-//     if (file) {
-//         formData.append("file", file);
-//     }
-//     let csrftoken = $("input[name=csrfmiddlewaretoken]").val();
-//     console.log("FormData:", formData);
-
-//     $.ajax({
-//         type: "POST",
-//         url: $(".text-input").data("post-url"), // Ensure this URL is correct
-//         data: formData,
-//         contentType: false,  // Required for FormData
-//         processData: false,   // Prevents jQuery from automatically processing the data
-//         headers: {
-//             "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() // Add CSRF Token
-//         },
-//         success: (dataHtml) => {
-//             $(".js-modal").addClass("hidden");
-//             $("#posts-container").prepend(dataHtml);
-//             $btn.prop("disabled", false).text("Post");
-//             $(".text-input").val("");
-//         },
-//         error: (xhr, status, error) => {
-//             console.warn("AJAX Error:", status, error);
-//             console.error("Response:", xhr.responseText);
-//             $btn.prop("disabled", false).text("Error");
-//         }
-//     });
-// });
-
-
 $(document).ready(function () {
     $(".js-submit").on("click", function (e) {
         e.preventDefault(); // Prevent default form submission
@@ -162,5 +117,31 @@ $(document).ready(function () {
                 $(".js-submit").text("Post").prop("disabled", false);
             }
         });
+    });
+});
+$(document).on("click",".js-follow",function(e) {
+    e.preventDefault();
+    const action = $(this).attr("data-action");
+  
+    $.ajax({
+        type: 'POST',
+        url: $(this).data("url"),
+        data: {
+            action: action,
+            username: $(this).data("username"),
+        },
+        success: (data) => {
+            $(".js-follow-text").text(data.wording);
+
+            if(action == "follow"){
+                $(this).attr("data-action","unfollow");
+            }else{
+                $(this).attr("data-action","follow"); 
+            }
+        },
+        error: (error) => {
+            console.warn(error);
+            $(this).prop("disabled", false).text("Error");
+        }
     });
 });

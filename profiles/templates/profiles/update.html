@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% load static %}
+
 {% block body %}
 <div class="shadow-wrap flex justify-center items-center min-h-screen bg-gray-600">
     <div class="form-container bg-gray-500 text-black p-6 rounded-lg shadow-lg w-full max-w-md">
@@ -8,12 +10,17 @@
             {% csrf_token %}
             <div>
                 <label class="block mb-1 text-gray-300">Profile Image</label>
-                {% comment %} <input type="file" name="Image" id="imageUpload" class="form-control bg-gray-700 text-white p-2 rounded w-full" accept="image/*" onchange="previewImage(event)"> {% endcomment %}
+                <input type="file" name="Image" id="imageUpload" class="form-control bg-gray-700 text-white p-2 rounded w-full" accept="image/*" onchange="previewImage(event)"> 
                 
                 <!-- Image Preview -->
                 <div class="mt-4">
-                    <img id="imagePreview" src="{{ request.user.profile.Image.url }}" alt="Current Profile Image" 
-                        class="w-32 h-32 object-cover rounded-full mx-auto border border-gray-600">
+                    {% if request.user.profile.Image %}
+                        <img id="imagePreview" src="{{ request.user.profile.Image.url }}" alt="Current Profile Image" 
+                             class="w-32 h-32 object-cover rounded-full mx-auto border border-gray-600">
+                    {% else %}
+                        <img id="imagePreview" src="{% static 'images/instagram-logo.jpg' %}" alt="Default Profile Image" 
+                             class="w-32 h-32 object-cover rounded-full mx-auto border border-gray-600">
+                    {% endif %}
                 </div>
             </div>
             <div>

@@ -13,12 +13,14 @@
                     <div class="flex flex-row items-center text-center gap-2">
                         <div class="w-11 h-11 rounded-full p-0.5 bg-gradient-to-r from-yellow-400 via-pink-500 to-red-500">
                             <div class="media-content w-full rounded-lg overflow-hidden border">
+                                <a href="{% url 'profiles:detail' post.author.username %}">
                                 {% for file in post.post_files.all %}  {% if file.file %} <div class="image-wrapper">
-                                            {% thumbnail user.profile.Image  "600x600" crop="center" as im %}  <img class="w-full h-auto object-cover" src="{{ im.url }}" alt="Post Image" />
+                                            {% thumbnail post.author.profile.Image  "600x600" crop="center" as im %}  <img class="w-full h-auto object-cover" src="{{ im.url }}" alt="Post Image" />
                                             {% endthumbnail %}
                                         </div>
                                     {% endif %}
                                 {% endfor %}
+                                </a>
                             </div>
                         </div>
                         <p class="text-white text-sm font-semibold pb-2 pt-1">{{ post.author }}</p>
